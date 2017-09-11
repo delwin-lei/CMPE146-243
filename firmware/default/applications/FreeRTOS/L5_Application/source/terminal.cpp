@@ -129,6 +129,8 @@ bool terminalTask::taskEntry()
                                                  "'telemetry get <comp. name> <name>' to get variable value\n");
     #endif
 
+    cp.addHandler(tempHandler,   "temp",  "Display temperature on LED Display. Celsius with 'temp c' and farenheit with 'temp f'.");
+
     // Initialize Interrupt driven version of getchar & putchar
     Uart0& uart0 = Uart0::getInstance();
     bool success = uart0.init(SYS_CFG_UART0_BPS, 32, SYS_CFG_UART0_TXQ_SIZE);

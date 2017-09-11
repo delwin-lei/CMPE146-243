@@ -10,6 +10,7 @@
 #include "command_handler.hpp"
 #include "lpc_sys.h"
 #include "chip_info.h"
+#include "io.hpp"
 
 
 
@@ -104,4 +105,32 @@ CMD_HANDLER_FUNC(getFileHandler)
     }
 
     return true;
+}
+
+CMD_HANDLER_FUNC(tempHandler)
+{
+    /* cmdParams is a str passed to you after user's command.
+     * If command was "newcmd test 123" then cmdParams will be "test 123".
+     *
+     * output is a CharDev class where the command came from, so
+     * we can use this to output a reply message.
+     * See "handlers.cpp" for more examples
+     */
+    if(cmdParams == "c")
+    {
+        output.printf("%i celsius", TS.getCelsius());
+        LD.setNumber(TS.getCelsius());
+    }
+    else if(cmdParams == "f")
+    {
+        output.printf("%i Farenheit", TS.getFarenheit());
+        LD.setNumber(TS.getFarenheit());
+    }
+    else
+    {
+        output.printf("ERROR for my command\n");
+    }
+
+    /* return false will display command's help to the user */
+    return true; /* return true if command was successful */
 }
